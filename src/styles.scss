@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.th-dbutton {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 微軟正黑體;
+  margin: 8px 0px 0px 8px;
+}
+
+.th-button_ok {
+  background-color: cornflowerblue;
+  color: white;
+}
+

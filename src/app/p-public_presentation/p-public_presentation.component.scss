@@ -1,0 +1,53 @@
+.page-content {
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.section {
+  padding: 8px;
+  background-color: white;
+  border-radius: 16px;
+
+  .section-title {
+    display: flex;
+    gap: 6px;
+
+    mat-icon {
+      color: cornflowerblue;
+    }
+    .desc {
+      color: gray;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
+  mat-divider {
+    padding-bottom: 8px;
+  }
+  .button-row {
+    text-align: right;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
+  .field-title {
+    padding: 8px;
+
+    font-size: 14px;
+    color: darkslategray;
+    font-weight: bold;
+    font-family: "Microsoft JhengHei";
+  }
+  .field-content {
+    font-size: 13px;
+  }
+  .time_unit {
+    font-weight: bolder;
+    font-size: 14px;
+  }
+}

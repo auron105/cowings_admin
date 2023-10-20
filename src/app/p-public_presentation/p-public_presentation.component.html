@@ -1,0 +1,186 @@
+<div class="page-content">
+
+  <div class="section">
+    <div class="section-title">
+      <mat-icon fontIcon="settings"></mat-icon>
+      <span class="desc">區域設定</span>
+    </div>
+
+    <form [formGroup]="Form" class="theform">
+      <table>
+        <tr>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                區域設定同:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <mat-select formControlName="follow" name="follow">
+                    <ng-container *ngFor="let item of appService.areaid_list">
+                      <mat-option [value]="item.area_id">
+                        <ion-text style="color: red">
+                          {{ item.area_id}}
+                        </ion-text>
+                        {{ item.area_name}}
+                      </mat-option>
+                    </ng-container>
+                  </mat-select>
+                  <mat-error *ngIf="Form['controls']['follow'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                區域名稱:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="area_name" name="area_name" type="text" autocomplete="off">
+                  <mat-error *ngIf="Form['controls']['area_name'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['area_name'].hasError('maxlength')">
+                    Length is <strong>20</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                播放區類型:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+
+                  <mat-select formControlName="show_type" name="show_type">
+                    <ng-container *ngFor="let item of appService.show_type_list">
+                      <mat-option [value]="item.value">
+                        {{ item.name}}
+                      </mat-option>
+                    </ng-container>
+                  </mat-select>
+                  <mat-error *ngIf="Form['controls']['show_type'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                診間資訊切換間隔:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="roomlist_show_timer" name="roomlist_show_timer" type="text"
+                    autocomplete="off">
+                  <span matSuffix class="time_unit">毫秒</span>
+                  <mat-error *ngIf="Form['controls']['roomlist_show_timer'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['roomlist_show_timer'].hasError('pattern')">
+                    Only number
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['roomlist_show_timer'].hasError('maxlength')">
+                    Length is <strong>5</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                叫號資訊輪詢間隔:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="opdinfo_pollingtimer" name="opdinfo_pollingtimer" type="text"
+                    autocomplete="off">
+                  <span matSuffix class="time_unit">毫秒</span>
+                  <mat-error *ngIf="Form['controls']['opdinfo_pollingtimer'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['opdinfo_pollingtimer'].hasError('pattern')">
+                    Only number
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['opdinfo_pollingtimer'].hasError('maxlength')">
+                    Length is <strong>5</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                跑馬燈切換間隔:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="text_carousel_timer" name="text_carousel_timer" type="text"
+                    autocomplete="off">
+                  <span matSuffix class="time_unit">毫秒</span>
+                  <mat-error *ngIf="Form['controls']['text_carousel_timer'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['text_carousel_timer'].hasError('pattern')">
+                    Only number
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['text_carousel_timer'].hasError('maxlength')">
+                    Length is <strong>5</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                幻燈片切換間隔:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="slides_timer" name="slides_timer" type="text" autocomplete="off">
+                  <span matSuffix class="time_unit">毫秒</span>
+                  <mat-error *ngIf="Form['controls']['slides_timer'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['slides_timer'].hasError('pattern')">
+                    Only number
+                  </mat-error>
+                  <mat-error *ngIf="Form['controls']['slides_timer'].hasError('maxlength')">
+                    Length is <strong>5</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="canSubmit()">存檔</button>
+    </div>
+  </div>
+
+
+
+</div>

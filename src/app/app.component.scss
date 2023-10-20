@@ -1,0 +1,50 @@
+.mat-toolbar.mat-primary {
+  background: royalblue;
+}
+
+.nav_bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+
+  img {
+    width: 74px;
+    padding-right: 16px;
+  }
+
+  .action {
+    background-color: rgb(0 0 0 / 23%);
+  }
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-container {
+  margin-top: 62px;
+
+  .side-title {
+    height: 84px;
+    background-color: royalblue;
+    color: white;
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  mat-list-option {
+    font-size: 18px;
+    color: gray;
+  }
+}
+
+mat-sidenav {
+  width: 241px;
+}
+
