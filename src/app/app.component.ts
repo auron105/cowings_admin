@@ -45,11 +45,11 @@ export class AppComponent implements OnInit {
     if (dev || serve) {
       this.devMode = true;
       this.appService.originurl = 'http://localhost:8080';
-      this.appService.baseurl = this.appService.originurl + '/pupr_ctrl/';
+      this.appService.baseurl = this.appService.originurl + '/pupr_ctrl/cowings_admin/';
     } else if (production) {
       this.devMode = false;
       this.appService.originurl = 'http://localhost:8080';
-      this.appService.baseurl = this.appService.originurl + '/pupr_ctrl/';
+      this.appService.baseurl = this.appService.originurl + '/pupr_ctrl/cowings_admin/';
     }
 
     //#region reload的時候，自動路由

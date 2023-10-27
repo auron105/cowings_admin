@@ -7,7 +7,7 @@
     </div>
 
     <form [formGroup]="Form" class="theform">
-      <table>
+      <table class="th-width-full">
         <tr>
           <td>
             <div class="form-field">
@@ -17,13 +17,23 @@
               <div class="field-content">
                 <mat-form-field appearance="standard">
                   <mat-select formControlName="follow" name="follow">
+
+                    <mat-option [value]="">
+                      <ion-text style="color: red">
+                        無
+                      </ion-text>
+                    </mat-option>
+
                     <ng-container *ngFor="let item of appService.areaid_list">
-                      <mat-option [value]="item.area_id">
-                        <ion-text style="color: red">
-                          {{ item.area_id}}
-                        </ion-text>
-                        {{ item.area_name}}
-                      </mat-option>
+                      <!-- 自己的項目不用呈現 -->
+                      <ng-container *ngIf="item.area_id !== area_id">
+                        <mat-option [value]="item.area_id">
+                          <ion-text style="color: red">
+                            {{ item.area_id}}
+                          </ion-text>
+                          {{ item.area_name}}
+                        </mat-option>
+                      </ng-container>
                     </ng-container>
                   </mat-select>
                   <mat-error *ngIf="Form['controls']['follow'].hasError('required')">
@@ -84,7 +94,7 @@
               </div>
               <div class="field-content">
                 <mat-form-field appearance="standard">
-                  <input matInput formControlName="roomlist_show_timer" name="roomlist_show_timer" type="text"
+                  <input matInput formControlName="roomlist_show_timer" name="roomlist_show_timer" type="number"
                     autocomplete="off">
                   <span matSuffix class="time_unit">毫秒</span>
                   <mat-error *ngIf="Form['controls']['roomlist_show_timer'].hasError('required')">
@@ -107,7 +117,7 @@
               </div>
               <div class="field-content">
                 <mat-form-field appearance="standard">
-                  <input matInput formControlName="opdinfo_pollingtimer" name="opdinfo_pollingtimer" type="text"
+                  <input matInput formControlName="opdinfo_pollingtimer" name="opdinfo_pollingtimer" type="number"
                     autocomplete="off">
                   <span matSuffix class="time_unit">毫秒</span>
                   <mat-error *ngIf="Form['controls']['opdinfo_pollingtimer'].hasError('required')">
@@ -132,7 +142,7 @@
               </div>
               <div class="field-content">
                 <mat-form-field appearance="standard">
-                  <input matInput formControlName="text_carousel_timer" name="text_carousel_timer" type="text"
+                  <input matInput formControlName="text_carousel_timer" name="text_carousel_timer" type="number"
                     autocomplete="off">
                   <span matSuffix class="time_unit">毫秒</span>
                   <mat-error *ngIf="Form['controls']['text_carousel_timer'].hasError('required')">
@@ -155,7 +165,7 @@
               </div>
               <div class="field-content">
                 <mat-form-field appearance="standard">
-                  <input matInput formControlName="slides_timer" name="slides_timer" type="text" autocomplete="off">
+                  <input matInput formControlName="slides_timer" name="slides_timer" type="number" autocomplete="off">
                   <span matSuffix class="time_unit">毫秒</span>
                   <mat-error *ngIf="Form['controls']['slides_timer'].hasError('required')">
                     is <strong>required</strong>
@@ -171,16 +181,195 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td>
+
+            
+            <div class="form-field">
+              <div class="field-title">
+                區域診間顯示清單:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <textarea matInput formControlName="room_str" name="room_str" type="text" autocomplete="off"></textarea>
+                  <mat-error *ngIf="Form['controls']['room_str'].hasError('pattern')">
+                    Only number
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </td>
+        </tr>
       </table>
     </form>
-    
+
     <mat-divider></mat-divider>
 
     <div class="button-row">
-      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="canSubmit()">存檔</button>
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="basic_canSubmit()"
+        (click)="basic_submit()">存檔</button>
     </div>
   </div>
 
+  <div class="section">
+    <div class="section-title">
+      <mat-icon fontIcon="settings"></mat-icon>
+      <span class="desc">youtube影片與播放清單設定</span>
+    </div>
 
+    <form [formGroup]="Form_yt" class="theform">
 
+      <div class="notice">
+        <mat-icon fontIcon="info"></mat-icon>
+        https://www.youtube.com/watch?v=video_id&list=playlist_id <br>
+      </div>
+      <table>
+        <tr>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                video_id:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="video_id" name="video_id" type="text" autocomplete="off">
+                  <mat-error *ngIf="Form_yt['controls']['video_id'].hasError('required')">
+                    is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="form-field">
+              <div class="field-title">
+                playlist_id:
+              </div>
+              <div class="field-content">
+                <mat-form-field appearance="standard">
+                  <input matInput formControlName="playlist_id" name="playlist_id" type="text" autocomplete="off">
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="yt_canSubmit()"
+        (click)="yt_submit()">存檔</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <mat-icon fontIcon="settings"></mat-icon>
+      <span class="desc">跑馬燈項目內容設定</span>
+    </div>
+
+    <div class="notice">
+      <mat-icon fontIcon="info"></mat-icon>
+      留空表示不呈現
+    </div>
+
+    <form [formGroup]="Form_carousel">
+      <ng-container *ngFor="let item of carousel_list; let i=index">
+
+        <div class="form-field">
+          <div class="field-content th-width-full">
+            <mat-form-field appearance="standard" style="width: 80%">
+              <input matInput [formControlName]="'text_desc_' + i" type="text" autocomplete="off"
+                [(ngModel)]="item.text_desc">
+              <mat-error *ngIf="Form_carousel['controls']['text_desc_' + i].hasError('maxlength')">
+                Length is <strong>30</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </ng-container>
+    </form>
+
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="carousel_canSubmit()"
+        (click)="carousel_submit()">存檔</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <mat-icon fontIcon="settings"></mat-icon>
+      <span class="desc">logo圖片上傳</span>
+    </div>
+
+    <div class="notice">
+      <mat-icon fontIcon="info"></mat-icon>
+      圖檔格式只支援jpg與png，圖檔大小限定在5M以內。
+    </div>
+
+    <div class="form-field">
+      <div class="field-content th-width-full th-d-flex th-flex-just-content-center">
+        <div class="upload_input">
+          <input type="file" accept=".jpg, .png" class="button" (change)="onFileChange($event)" />
+        </div>
+      </div>
+    </div>
+    <div class="img_content">
+      <img [src]="this.logo_url" />
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="logo_canSubmit()"
+        (click)="logo_image_upload()">上傳</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <mat-icon fontIcon="settings"></mat-icon>
+      <span class="desc">幻燈片維護</span>
+    </div>
+
+    <div class="notice">
+      <mat-icon fontIcon="info"></mat-icon>
+      圖檔格式只支援jpg與png，圖檔大小限定在5M以內。
+    </div>
+
+    <div class="form-field">
+      <div class="field-content th-width-full th-d-flex th-flex-just-content-center">
+        <div class="upload_input">
+          <input type="file" accept=".jpg, .png" class="button" (change)="slide_onFileChange($event)" />
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="button-row">
+      <button mat-flat-button class="th-dbutton th-button_ok" [disabled]="slide_canSubmit()"
+        (click)="slide_image_upload()">上傳</button>
+    </div>
+
+    <div class="img_content2">
+      <ng-container *ngFor="let item of slide_list">
+        <div class="img_item">
+          <div class="content">
+            <img [src]="appService.originurl + '/pupr_ctrl/uploads/' + item.slide_img_url" />
+          </div>
+          <div class="img_button">
+            <button mat-icon-button color="warn" (click)="slides_list_delete(item.slide_id)">
+              <mat-icon fontIcon="close"></mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </div>

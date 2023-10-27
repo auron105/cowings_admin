@@ -5,6 +5,7 @@
 
 .section {
   padding: 8px;
+  margin-bottom: 16px;
   background-color: white;
   border-radius: 16px;
 
@@ -15,6 +16,7 @@
     mat-icon {
       color: cornflowerblue;
     }
+
     .desc {
       color: gray;
       font-weight: bold;
@@ -24,7 +26,9 @@
 
   mat-divider {
     padding-bottom: 8px;
+    padding-top: 8px;
   }
+
   .button-row {
     text-align: right;
   }
@@ -43,11 +47,72 @@
     font-weight: bold;
     font-family: "Microsoft JhengHei";
   }
+
   .field-content {
     font-size: 13px;
   }
+
   .time_unit {
     font-weight: bolder;
     font-size: 14px;
+  }
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  background-color: lightblue;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 8px 0px;
+
+  mat-icon {
+    color: red;
+    margin-right: 8px;
+  }
+}
+
+.th-button_upload {
+  color: white;
+  background-color: chocolate;
+}
+
+.upload_input {
+  border: solid 1px darkgray;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.img_content {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 30%;
+  }
+}
+
+.img_content2 {
+  display: flex;
+  flex-flow: column;
+
+  .img_item {
+    position: relative;
+    display: flex;
+    margin: 2px 0;
+
+    .content {
+      position: relative;
+      height: 200px;
+      border: solid 1px darkgray;
+      border-radius: 12px;
+      padding: 6px 12px;
+      flex: 1;
+      text-align: center;
+      
+      img {
+        height: 100%;
+      }
+    }
   }
 }
