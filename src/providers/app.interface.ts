@@ -62,10 +62,14 @@ export interface carousel_list_obj {
 }
 
 export interface carousel_list_update {
+    object: carousel_list_update_obj[];
+}
+interface carousel_list_update_obj {
     area_id: string;
     text_id: string;
     text_desc: string;
 }
+
 
 export interface slides_list {
     area_id: string;

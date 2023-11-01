@@ -94,7 +94,9 @@
 
 .img_content2 {
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 
   .img_item {
     position: relative;
@@ -109,10 +111,22 @@
       padding: 6px 12px;
       flex: 1;
       text-align: center;
-      
+
       img {
         height: 100%;
       }
+    }
+  }
+}
+
+.room_str {
+  flex-grow: 1;
+
+  mat-form-field {
+    width: 100%;
+
+    textarea {
+      background-color: aliceblue;
     }
   }
 }

@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { publickey } from "./publickey";
+import { RequestService } from "../providers/service/request.service";
 import {
-    RequestService,
+    // RequestService,
     rs_options,
     AlertService,
     LoadingService
@@ -35,6 +36,7 @@ export class AppService {
         private loadingService: LoadingService,
     ) { }
 
+    hosp = '';
     selectedurl = '';
 
     originurl: string = '';
@@ -60,6 +62,21 @@ export class AppService {
             value: 'youtube'
         }
     ];
+
+    
+    // 新增區域代碼清單
+    async add_areaid_list(options: rs_options): Promise<Array<number>> {
+        if (options.rsa) options.publickey = publickey;
+
+        this.loadingService.OpenLoading();
+        const res = await this.requestService.RequestService(this.baseurl + 'add_areaid_list', {}, 'POST', options);
+        this.loadingService.CloseLoading();
+        if (res.success !== 'Y') {
+            this.alertService.presentAlertWithOptions('錯誤?', res.message);
+            throw new Error('錯誤? ' + res.message);
+        }
+        return res.object;
+    }
     // 取得區域代碼清單
     async get_areaid_list(data_import: get_areaid_list, options: rs_options): Promise<areaid_list_obj[]> {
         if (options.rsa) options.publickey = publickey;
@@ -178,6 +195,8 @@ export class AppService {
         }
         return res.object;
     }
+
+
     //#endregion
 
     mssql_rowaffect(res: any) {

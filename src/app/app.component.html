@@ -9,33 +9,47 @@
   <button mat-button>{{Copyright}} V{{Version}}</button>
 </mat-toolbar>
 
-<ng-container *ngIf="appService.selectedurl==='public_presentation'">
+<ng-container [ngSwitch]="appService.selectedurl">
+  <ng-container *ngSwitchCase="'public_presentation'">
 
-  <mat-sidenav-container class="sidenav-container th-height-full">
-    <mat-sidenav #snav class="th-sidenav" [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches" [opened]="true" disableClose>
-      <div class="sidenav-content th-height-full">
-        <div class="side-title th-d-flex th-flex-align-items-center th-flex-just-content-center">
-          <p class=th-text-center>
-            {{selecteditem}} <br> {{selecteditemtiem}}
-          </p>
+    <mat-sidenav-container class="sidenav-container th-height-full">
+      <mat-sidenav #snav class="th-sidenav" [mode]="mobileQuery.matches ? 'over' : 'side'"
+        [fixedInViewport]="mobileQuery.matches" [opened]="true" disableClose>
+        <div class="sidenav-content th-height-full">
+          <div class="side-title th-d-flex th-flex-align-items-center th-flex-just-content-center">
+            <p class=th-text-center>
+              {{selecteditem}} <br> {{selecteditemtiem}}
+            </p>
+          </div>
+          <div class="side-content th-overflow-y-auto th-hide-scroll">
+            <mat-selection-list [multiple]="false">
+              <mat-list-option *ngFor="let item of sidelist"
+                [selected]="(item.areaid_name===selecteditemtiem)?true:false" (click)="change_action_item2(item)">
+                {{item.area_name}}({{item.area_id}})
+              </mat-list-option>
+            </mat-selection-list>
+            <div class="th-separator"></div>
+            <div class="fab-button-content">
+              <button mat-mini-fab color="primary" (click)="open_add_area_dialog()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="side-content th-overflow-y-auto th-hide-scroll">
-          <mat-selection-list [multiple]="false">
-            <mat-list-option *ngFor="let item of sidelist" [selected]="(item.areaid_name===selecteditemtiem)?true:false"
-              (click)="change_action_item2(item)">
-              {{item.area_name}}({{item.area_id}})
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
-      </div>
-    </mat-sidenav>
+      </mat-sidenav>
 
-    <mat-sidenav-content class="th-hide-scroll" [style.z-index]="3">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+      <mat-sidenav-content class="th-hide-scroll" [style.z-index]="3">
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
 
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <div class="first_content">
+      請在上方選擇系統
+    </div>
+  </ng-container>
 </ng-container>
 
 <!-- <th-resolution-mask class="th-p-fixed" [style.z-index]="99999"></th-resolution-mask> -->

@@ -1,2 +1,3 @@
-export const DevTargetUrl = 'https://dev-apps.tmu.edu.tw/crossls';
-export const TargetUrl = 'https://apps.tmu.edu.tw/crossls';
+export const DevOriginUrl = 'http://localhost:8080';
+export const OriginUrl = 'http://localhost:8080';
+export const UrlParam = '/pupr_ctrl/cowings_admin/';

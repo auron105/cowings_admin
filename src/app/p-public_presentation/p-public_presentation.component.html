@@ -182,23 +182,21 @@
           </td>
         </tr>
         <tr>
-          <td>
-
-            
+          <td rowspan="2">
             <div class="form-field">
               <div class="field-title">
                 區域診間顯示清單:
               </div>
-              <div class="field-content">
-                <mat-form-field appearance="standard">
-                  <textarea matInput formControlName="room_str" name="room_str" type="text" autocomplete="off"></textarea>
+              <div class="field-content room_str" style="flex-grow: 1;">
+                <mat-form-field appearance="standard" style="width: 100%">
+                  <textarea matInput formControlName="room_str" name="room_str" type="text" autocomplete="off"
+                    rows="5"></textarea>
                   <mat-error *ngIf="Form['controls']['room_str'].hasError('pattern')">
-                    Only number
+                    不得輸入特殊字元與中文
                   </mat-error>
                 </mat-form-field>
               </div>
             </div>
-
           </td>
         </tr>
       </table>
@@ -321,7 +319,14 @@
       </div>
     </div>
     <div class="img_content">
-      <img [src]="this.logo_url" />
+      <ng-container *ngIf="logo_url; else nologo">
+        <img [src]="this.logo_url" />
+      </ng-container>
+      <ng-template #nologo>
+        <span>
+          請上傳logo
+        </span>
+      </ng-template>
     </div>
     <mat-divider></mat-divider>
 

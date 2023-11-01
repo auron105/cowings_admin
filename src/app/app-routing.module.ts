@@ -8,8 +8,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'public_presentation',
-    loadChildren: () => import('./p-public_presentation/p-public_presentation.module').then(m => m.PPublicPresentationModule),
+    path: ':hosp',
+    children: [
+      {
+        path: 'public_presentation',
+        loadChildren: () => import('./p-public_presentation/p-public_presentation.module').then(m => m.PPublicPresentationModule),
+      }
+    ]
   },
 ];
 

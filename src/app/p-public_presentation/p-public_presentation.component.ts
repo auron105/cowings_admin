@@ -39,13 +39,30 @@ export class PPublicPresentationComponent implements OnInit {
     });
 
     window.addEventListener('p-public_presentation:change_area_id', async () => {
+      this.reset_data();
       this.area_id = this.appService.pupr_useitem;
       await this.get_area_setting();
       this.form_item_init();
       this.changeDetectorRef.detectChanges();
     });
   }
+  reset_data() {
+    this.Form.reset();
+    this.area_id = '';
+    this.area_detail = {};
 
+    this.Form_yt.reset();
+    this.yt_list = [];
+
+    this.Form_carousel.reset();
+    this.carousel_list = [];
+
+    this.Form_logo.reset();
+    this.logo_url = '';
+    this.prefile = undefined;
+    this.slide_list = []
+    this.slide_prefile = undefined;
+  }
   form_item_init() {
     for (const key in this.area_detail) {
       let item = this.area_detail[key];
@@ -84,13 +101,12 @@ export class PPublicPresentationComponent implements OnInit {
     area_name: ['', [Validators.required, Validators.maxLength(20)]],
     follow: [''],
     show_type: ['youtube', [Validators.required]],
-    room_str: ['', [Validators.pattern(/^[0-9]+$/)]],
+    room_str: ['', [Validators.pattern(/^[0-9a-zA-Z,]+$/)]],
     roomlist_show_timer: [10000, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(5)]],
     opdinfo_pollingtimer: [10000, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(5)]],
     text_carousel_timer: [10000, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(5)]],
     slides_timer: [10000, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(5)]],
   });
-
   area_id: string = '';
   area_detail: any = {};
 
@@ -112,7 +128,11 @@ export class PPublicPresentationComponent implements OnInit {
       const [areaid_detail_res, yt_res, carousel_res, slide_res] = await Promise.all(promises);
 
       this.area_detail = areaid_detail_res[0] || {};
-      this.logo_url = this.appService.originurl + '/pupr_ctrl/uploads/' + this.area_detail.logo_image_url;
+
+      if (this.area_detail.logo_image_url) {
+        this.logo_url = this.appService.originurl + '/pupr_ctrl/uploads/' + this.area_detail.logo_image_url;
+      }
+
       this.yt_list = yt_res[0] || {};
       this.carousel_list = carousel_res || [];
 
@@ -127,9 +147,6 @@ export class PPublicPresentationComponent implements OnInit {
       console.error('Error:', error);
     }
   }
-
-
-
   basic_canSubmit() {
     let res = false;
 
@@ -171,7 +188,6 @@ export class PPublicPresentationComponent implements OnInit {
     video_id: ['', [Validators.required]],
     playlist_id: ['']
   });
-
   yt_list: any = [];
 
   yt_canSubmit() {
@@ -242,7 +258,11 @@ export class PPublicPresentationComponent implements OnInit {
       }
     });
 
-    const res = await this.appService.carousel_list_update(this.carousel_list, { rsa: false });
+    const data_import = {
+      object: this.carousel_list
+    }
+
+    const res = await this.appService.carousel_list_update(data_import, { rsa: false });
     if (res) {
       const ElementGreaterThanZero = this.appService.mssql_rowaffect(res);
 
@@ -261,7 +281,6 @@ export class PPublicPresentationComponent implements OnInit {
     area_id: ['', [Validators.required]],
     logo_img: ['', [Validators.required]],
   });
-
   logo_url: string = '';
   prefile: any;
 
@@ -306,6 +325,7 @@ export class PPublicPresentationComponent implements OnInit {
     }
 
     const formData = new FormData();
+    formData.append('hosp', this.appService.hosp);
     formData.append('area_id', this.area_id);
     formData.append('file', _file);
     this.httpClient.post(this.appService.baseurl + 'logo_upload', formData).subscribe(async (event: any) => {
@@ -315,16 +335,22 @@ export class PPublicPresentationComponent implements OnInit {
       if (!ElementGreaterThanZero) {
         chk_msg = '更新失敗';
       }
+      
+      this.logo_url = '';
+      this.changeDetectorRef.detectChanges();
 
       await this.alertService.presentAlertWithOptions('', chk_msg);
       await this.get_area_setting();
-      this.changeDetectorRef.detectChanges();
+
+      setTimeout(() => {
+        this.changeDetectorRef.detectChanges();
+      }, 500);
     });
   }
 
   slide_list: any = [];
-
   slide_prefile: any;
+
   slide_canSubmit() {
     let res = true;
 
@@ -366,6 +392,7 @@ export class PPublicPresentationComponent implements OnInit {
     }
 
     const formData = new FormData();
+    formData.append('hosp', this.appService.hosp);
     formData.append('area_id', this.area_id);
     formData.append('file', _file);
     this.httpClient.post(this.appService.baseurl + 'slide_upload', formData).subscribe(async (event: any) => {
